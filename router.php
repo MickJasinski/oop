@@ -21,4 +21,16 @@ class Router
         if (in_array($method, $this->http_methods)) return $method;
         return 'get';
     }
+
+    public function respond($method, $route, $callable) {
+        $method = strtolower($method);
+
+        if ($route == '/') $route = $this->base_path;
+        else $route = $this->base_path.$route;
+
+        if ($method == $this->request_method && $route == $this->request_uri)
+        {
+            call_user_func_array($callable, array());
+        }
+    }
 }
